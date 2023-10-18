@@ -15,7 +15,10 @@ export class AppComponent {
   ) {}
 
   onAdd() {
-    this.router.navigate(['new'], {relativeTo: this.route});
+    this.router.navigate(['courses/new'], {relativeTo: this.route});
+  }
+  onHome() {
+    this.router.navigate([''])
   }
 
 }
