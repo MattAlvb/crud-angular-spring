@@ -4,6 +4,9 @@ import { CoursesService } from '../services/courses.service';
 import { Observable, catchError, of } from 'rxjs';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 
 
 @Component({
@@ -13,14 +16,23 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class CoursesComponent {
 
-  courses$: Observable<Course[]>;
+  courses$: Observable<Course[]> | null = null;
 
 
   constructor(
     private coursesService: CoursesService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar
+
     ) {
 
+    this.refresh();
+
+  }
+
+  refresh() {
     this.courses$ = this.coursesService.list()
     .pipe(
         catchError(error => {
@@ -28,13 +40,39 @@ export class CoursesComponent {
           return of([])
         })
     );
-
   }
 
   onError(errorMsg: string) {
     this.dialog.open(ErrorDialogComponent, {
       data: errorMsg
     });
+  }
+
+  onEdit(course: Course) {
+    this.router.navigate(['edit', course._id], {relativeTo: this.route})
+  }
+
+  onRemove(course: Course){
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: 'Tem certeza que deseja remover?',
+    });
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if(result){
+        this.coursesService.remove(course._id).subscribe(
+          () => {
+            this.refresh();
+            this.snackBar.open('Curso removido com sucesso','X', {
+              duration: 3000,
+              verticalPosition: 'top',
+              horizontalPosition: 'center'
+            });
+          },
+          error => this.onError('Erro ao tentar remover curso')
+        );
+      }
+    });
+
   }
 
 }

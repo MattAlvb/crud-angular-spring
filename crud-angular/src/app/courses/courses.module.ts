@@ -12,6 +12,7 @@ import { CoursesListComponent } from './courses-list/courses-list.component';
 
 
 
+
 @NgModule({
   declarations: [
     CoursesComponent,
@@ -23,7 +24,7 @@ import { CoursesListComponent } from './courses-list/courses-list.component';
     CoursesRoutingModule,
     AppMaterialModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class CoursesModule { }
