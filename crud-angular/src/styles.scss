@@ -5,9 +5,18 @@ $custom-app-primary: mat-palette($mat-grey,900);
 $custom-app-secondary: mat-palette($mat-grey,800);
 $custom-app-warn: mat-palette($mat-red);
 
-$custom-theme: mat-light-theme($custom-app-primary, $custom-app-secondary,$custom-app-warn);
+$light-theme: mat-light-theme($custom-app-primary, $custom-app-secondary,$custom-app-warn);
+$dark-theme: mat-dark-theme($custom-app-primary, $custom-app-secondary,$custom-app-warn);
 
-@include angular-material-theme($custom-theme);
+.theme-dark{
+  @include angular-material-theme($dark-theme);
+}
+
+.theme-light{
+  @include angular-material-theme($light-theme);
+}
+
+@include angular-material-theme($light-theme);
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
