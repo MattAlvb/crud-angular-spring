@@ -23,7 +23,7 @@ import lombok.Data;
 @Entity
 
 @SQLDelete( sql = "UPDATE Course SET status = 'Inativo' WHERE id = ?")
-
+//@Where
 public class Course {
     
     @Id

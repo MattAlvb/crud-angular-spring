@@ -4,12 +4,10 @@
     <mat-icon>menu</mat-icon>
   </button>
   <span>Projeto</span>
-  <div>
-    <button mat-icon-button (click)="changeTheme()" (click)="darkMode.set(!darkMode())" class="action-column-header">
+    <button mat-icon-button (click)="changeTheme()" (click)="darkMode.set(!darkMode())" style="left: 1130px;">
       <mat-icon *ngIf="!darkMode()">dark_mode</mat-icon>
       <mat-icon *ngIf="darkMode()">light_mode</mat-icon>
     </button>
-  </div>
 </mat-toolbar>
 
 <router-outlet></router-outlet>
